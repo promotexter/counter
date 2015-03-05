@@ -15,7 +15,7 @@ var config = {
 
 var TrafficCounter = require('../traffic_counter');
 
-var tc = new TrafficCounter(config);
+var tc = new TrafficCounter({ db :  config.db.credentials } );
 tc.run(function(){
 	// let's test localized configured account
 	// tc.add(100001, 'sms_sent', 10, 'UP8');
@@ -24,9 +24,9 @@ tc.run(function(){
 
 	var d = {
 			 account_id		: 200001,
-			 transaction	: 'sms_api',
-			 code			: 'sent',
-			 count			: 20,
+			 transaction	: 'bsms',
+			 code			: 'cost',
+			 value			: 20.1,
 			 user_id 		: 1,
 			 timezone		: 'GMT',
 	};
@@ -34,10 +34,10 @@ tc.run(function(){
 	tc.add(d);	
 
 	var dd = {
-			 account_id		: 200001,
+			 account_id		: 200002,
 			 transaction	: 'sms_api',
 			 code			: 'delivered',
-			 count			: 100,
+			 value			: 100,
 			 user_id 		: 1,
 			 timezone		: 'Asia/Manila',
 	};

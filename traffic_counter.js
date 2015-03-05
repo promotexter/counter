@@ -19,7 +19,7 @@
 		self.status 		= false;
 
 
-		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update count = count + VALUES(count) ";
+		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update value = value + VALUES(value) ";
 		self.get_account_query 		= c.get_account_query || "select * from vw_account_api where account_id = ?";
 
 		self.errors 			= {
@@ -95,7 +95,6 @@
 
 				callback();
 			});
-		
 		}
 
 		self.add = function(d)
@@ -103,42 +102,52 @@
 			console.log("ADD request", d);
 
 
+			var local_d = d;
+			var gmt_d = d;
 
-			d['transaction_id'] = self.transactions[d.transaction];
-			d['timezone_id']  	= self.timezones[d.timezone];
-			d['code_id'] 		= self.codes[d.code];
+			gmt_d['transaction_id'] = self.transactions[d.transaction];
+			gmt_d['code_id'] 		= self.codes[d.code];
+			gmt_d['date'] 			= moment().format('YYYY-MM-DD');
+			gmt_d['timezone_id']  	= self.timezones['GMT'];
 
-			// make sure there is a timezone
-			if(!d.timezone)
-			{
-				console.log("No timezone, let's get it");
+			// add gmt
+			self.add_now(gmt_d, function(){
+					// make sure there is a timezone
+				if(!local_d['timezone'])
+				{
+					console.log("No timezone, let's get it");
 
-				// get the timezone of the account
+					// get the timezone of the account
 
-				self.get_account_timezone(account_id, function(err, t){
-					if(err) throw err;
+					self.get_account_timezone(local_d['account_id'], function(err, t){
+						if(err) throw err;
 
-					d['timezone_name']  = t.timezone_name;
+						local_d['timezone_id']  	= self.timezones[t.timezone_name];
+						local_d['timezone_name']  = t.timezone_name;
 
-					self.add_local(d, self.add_now_done);
-				});
-			}
-			else
-			{
-				console.log("timezone is given", d.timezone);
+						self.add_local(local_d, self.add_now_done);
+					});
+				}
+				else
+				{
+					console.log("timezone is given", local_d['timezone']);
 
-				
-				d['timezone_name']  = d.timezone;
-				
+					
+					local_d['timezone_id']  	= self.timezones[local_d['timezone']];
+					local_d['timezone_name']  	= local_d.timezone;
+					
 
-				// no checking here. this will fail if the timezone name is invalid
+					// no checking here. this will fail if the timezone name is invalid
 
-				self.add_local(d, self.add_now_done);
-			}
+					self.add_local(local_d, self.add_now_done);
+				}
 
-			d.date = moment().format('YYYY-MM-DD');
+			});
 
-			self.add_now(d, self.add_now_done);
+		
+			
+
+			
 
 		}
 
@@ -159,7 +168,7 @@
 
 				// var date_local = self.get_date_local(timezone_name);
 
-				d.date = moment().tz(d.timezone_name).format('YYYY-MM-DD');
+				d['date'] = moment().tz(d.timezone_name).format('YYYY-MM-DD');
 
 
 				self.add_now(d,  self.add_now_done);
@@ -208,11 +217,11 @@
 				code_id 			: d.code_id,
 				timezone_id 		: d.timezone_id,
 				user_id 			: d.user_id,
-				count 				: d.count,
+				value 				: d.value,
 				date 				: d.date
 			}
 
-			console.log(p);
+			console.log('add-now',p);
 
 
 			mc_pool.query(self.insert_query, p, function(err, rows, fields){
