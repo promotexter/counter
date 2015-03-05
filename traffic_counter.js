@@ -122,7 +122,7 @@
 					self.get_account_timezone(local_d['account_id'], function(err, t){
 						if(err) throw err;
 
-						local_d['timezone_id']  	= self.timezones[t.timezone_name];
+						local_d['timezone_id']    = self.timezones[t.timezone_name];
 						local_d['timezone_name']  = t.timezone_name;
 
 						self.add_local(local_d, self.add_now_done);
@@ -184,26 +184,32 @@
 
 			if(self.account_timezone[account_id])
 			{
+				console.log("FOUND HERE");
 				callback(self.account_timezone[account_id]);
 			}
+			else
+			{
+				mc_pool.query(self.get_account_query, { account_id : account_id }, function(err, rows, fields){
+					if(err) throw err;
 
-			mc_pool.query(self.get_account_query, { account_id : account_id }, function(err, rows, fields){
-				if(err) throw err;
+					console.log("RETRIEVED", rows);
 
-				if(rows[0])
-				{
-					// save it into the local mem
-					self.account_timezone[account_id] = rows[0];
 
-					callback(null, rows[0]);	
-				}
-				else
-				{
-					callback(self.errors['ERR001']);
-				}
+					if(rows[0])
+					{
+						// save it into the local mem
+						// self.account_timezone[account_id] = rows[0];
 
-				
-			});
+						callback(null, rows[0]);	
+					}
+					else
+					{
+						callback(self.errors['ERR001']);
+					}
+
+					
+				});
+			}
 		}
 
 		self.add_now = function(d, callback)

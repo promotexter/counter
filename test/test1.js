@@ -23,12 +23,11 @@ tc.run(function(){
 	// // let's test UTC configured account
 
 	var d = {
-			 account_id		: 200001,
+			 account_id		: 1,
 			 transaction	: 'bsms',
 			 code			: 'cost',
 			 value			: 20.1,
-			 user_id 		: 1,
-			 timezone		: 'GMT',
+			 user_id 		: 1
 	};
 
 	tc.add(d);	
@@ -42,7 +41,7 @@ tc.run(function(){
 			 timezone		: 'Asia/Manila',
 	};
 
-	tc.add(dd);	
+	// tc.add(dd);	
 
 
 });
