@@ -15,6 +15,7 @@
 		self.timezones 		= [];
 		self.transactions 	= [];
 		self.codes 			= [];
+		self.account_timezone = {};
 		self.status 		= false;
 
 
@@ -169,11 +170,22 @@
 
 		self.get_account_timezone = function(account_id, callback)
 		{	
+
+			// check if it's in the local memory now
+
+			if(self.account_timezone[account_id])
+			{
+				callback(self.account_timezone[account_id]);
+			}
+
 			mc_pool.query(self.get_account_query, { account_id : account_id }, function(err, rows, fields){
 				if(err) throw err;
 
 				if(rows[0])
 				{
+					// save it into the local mem
+					self.account_timezone[account_id] = rows[0];
+
 					callback(null, rows[0]);	
 				}
 				else
