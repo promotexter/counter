@@ -189,7 +189,7 @@
 			}
 			else
 			{
-				mc_pool.query(self.get_account_query, { account_id : account_id }, function(err, rows, fields){
+				mc_pool.query(self.get_account_query, [ account_id ], function(err, rows, fields){
 					if(err) throw err;
 
 					console.log("RETRIEVED", rows);
