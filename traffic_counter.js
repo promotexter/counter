@@ -184,7 +184,7 @@
 
 			if(self.account_timezone[account_id])
 			{
-				console.log("FOUND HERE");
+				// console.log("FOUND HERE");
 				callback(self.account_timezone[account_id]);
 			}
 			else
@@ -192,7 +192,7 @@
 				mc_pool.query(self.get_account_query, [ account_id ], function(err, rows, fields){
 					if(err) throw err;
 
-					console.log("RETRIEVED", rows);
+					// console.log("RETRIEVED", rows);
 
 
 					if(rows[0])
