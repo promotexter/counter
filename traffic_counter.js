@@ -10,7 +10,7 @@
 		var mysql           = require('mysql');
 
 
-		var mc_pool			= mysql.createPool(c.db.credentials);
+		var mc_pool			= mysql.createPool(c.db);
 
 		self.timezones 		= [];
 		self.transactions 	= [];
