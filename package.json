@@ -1,0 +1,26 @@
+{
+  "name": "TrafficCounter",
+  "version": "1.0.0",
+  "description": "Module to record transaction count coming from multiple apps",
+  "main": "traffic_counter.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/promotexter/counter.git"
+  },
+  "author": "Ferdinand Yanto III",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/promotexter/counter/issues"
+  },
+  "homepage": "https://github.com/promotexter/counter",
+  "dependencies": {
+    "moment-timezone": "^0.3.0",
+    "mysql": "^2.5.5"
+  }
+}
