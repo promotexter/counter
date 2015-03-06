@@ -244,7 +244,7 @@
 				connection.query(self.insert_query, p, function(err, rows, fields){
 					if(err) console.log("Error encountered",err);
 
-					console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
+					// console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
 
 					connection.release();
 
