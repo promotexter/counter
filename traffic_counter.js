@@ -90,7 +90,7 @@
 		          object[v[key]] = v[value];
 		        }
 
-		        console.log(table_name, "retrieved",object);
+		        // console.log(table_name, "retrieved",object);
 
 
 				callback();
@@ -99,7 +99,8 @@
 
 		self.add = function(d)
 		{
-			console.log("ADD request", d);
+
+			console.log("ADD request", d.account_id, d.code, d.transaction, d.timezone, d.user_id, d.value);
 
 
 			var local_d = d;
@@ -115,7 +116,7 @@
 					// make sure there is a timezone
 				if(!local_d['timezone'])
 				{
-					console.log("No timezone, let's get it");
+					// console.log("No timezone, let's get it");
 
 					// get the timezone of the account
 
@@ -153,7 +154,14 @@
 
 		self.add_now_done = function(err, d)
 		{
-			console.log("ADD", err, d);
+			if(err)
+			{
+				console.log("ERROR saving");
+			}
+			else
+			{
+				console.log("SUCCESS save");
+			}
 		}
 
 		self.add_local = function(d)
@@ -206,8 +214,6 @@
 					{
 						callback(self.errors['ERR001']);
 					}
-
-					
 				});
 			}
 		}
@@ -215,6 +221,7 @@
 		self.add_now = function(d, callback)
 		{
 			// we need the current data in UTC
+
 			// environment date should be in UTC
 
 			var p = {
@@ -227,11 +234,14 @@
 				date 				: d.date
 			}
 
-			console.log('add-now',p);
+			console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
+
 
 
 			mc_pool.query(self.insert_query, p, function(err, rows, fields){
 				if(err) throw err;
+
+				console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
 
 				callback(null, rows);
 			});
