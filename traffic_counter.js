@@ -121,7 +121,7 @@
 					// get the timezone of the account
 
 					self.get_account_timezone(local_d['account_id'], function(err, t){
-						if(err) throw err;
+						console.log("Error encountered",err);
 
 						local_d['timezone_id']    = self.timezones[t.timezone_name];
 						local_d['timezone_name']  = t.timezone_name;
@@ -198,7 +198,7 @@
 			else
 			{
 				mc_pool.query(self.get_account_query, [ account_id ], function(err, rows, fields){
-					if(err) throw err;
+					console.log("Error encountered",err);
 
 					// console.log("RETRIEVED", rows);
 
@@ -242,7 +242,7 @@
 
 			mc_pool.getConnection(function(err, connection){
 				connection.query(self.insert_query, p, function(err, rows, fields){
-					if(err) throw err;
+					console.log("Error encountered",err);
 
 					console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
 
