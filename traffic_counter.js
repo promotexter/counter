@@ -240,14 +240,17 @@
 			console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
 
 
+			mc_pool.getConnection(function(err, connection){
+				connection.query(self.insert_query, p, function(err, rows, fields){
+					if(err) throw err;
 
-			mc_pool.query(self.insert_query, p, function(err, rows, fields){
-				if(err) throw err;
+					console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
 
-				console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id , "OK");
+					connection.release();
 
-				callback(null, rows);
-			});
+					callback(null, rows);
+				});
+			})
 		}
 	}
 
