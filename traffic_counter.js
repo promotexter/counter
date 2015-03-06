@@ -156,11 +156,11 @@
 		{
 			if(err)
 			{
-				console.log("ERROR saving");
+				// console.log("ERROR saving");
 			}
 			else
 			{
-				console.log("SUCCESS save");
+				// console.log("SUCCESS save");
 			}
 		}
 
@@ -237,7 +237,7 @@
 				date 				: d.date
 			}
 
-			console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
+			// console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
 
 
 			mc_pool.getConnection(function(err, connection){
