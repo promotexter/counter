@@ -19,7 +19,7 @@
 		self.status 		= false;
 
 
-		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update value = value + VALUES(value) ";
+		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update value = value + VALUES(value), cost = cost + VALUES(cost)";
 		self.get_account_query 		= c.get_account_query || "select * from vw_account_api where account_id = ?";
 
 		self.errors 			= {
@@ -234,7 +234,8 @@
 				timezone_id 		: d.timezone_id,
 				user_id 			: d.user_id,
 				value 				: d.value,
-				date 				: d.date
+				date 				: d.date,
+				cost 				: d.cost
 			}
 
 			// console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
