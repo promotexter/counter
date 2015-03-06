@@ -235,7 +235,7 @@
 				user_id 			: d.user_id,
 				value 				: d.value,
 				date 				: d.date,
-				cost 				: d.cost
+				cost 				: d.cost || 0
 			}
 
 			// console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
