@@ -19,7 +19,7 @@
 		self.status 		= false;
 
 
-		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update value = value + VALUES(value), cost = cost + VALUES(cost)";
+		self.insert_query   		= c.insert_query || "INSERT into account_transaction_counter set ? ON DUPLICATE KEY update value = value + VALUES(value), cost = cost + VALUES(cost), price = price + VALUES(price)";
 		self.get_account_query 		= c.get_account_query || "select * from vw_account_api where account_id = ?";
 
 		self.errors 			= {
