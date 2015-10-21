@@ -240,6 +240,12 @@
 				price 				: d.price || 0
 			}
 
+			
+			if(d.keyword_id)
+			{
+				p['keyword_id'] = d.keyword_id;
+			}
+
 			// console.log('Saving',  p.account_id, p.code_id, p.timezone_id, p.transaction_id , p.user_id );
 
 
